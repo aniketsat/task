@@ -1,0 +1,93 @@
+.register,
+.login {
+  width: 420px;
+  padding: 20px;
+  margin: auto;
+  border: "1px solid #ccc";
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  margin: auto;
+  margin-top: 80px;
+}
+
+input {
+  width: 360px;
+  margin-bottom: 10px;
+}
+label {
+  width: 360px;
+}
+
+.register-btn,
+.login-btn {
+  width: 380px;
+  margin-bottom: 10px;
+}
+
+/* write media queries for mobile and tablet view */
+@media (max-width: 470px) {
+  .register,
+  .login {
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    border: "1px solid #ccc";
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    margin: 100px auto;
+  }
+
+  input {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+
+  .register-btn,
+  .login-btn {
+    margin: auto;
+    width: 90%;
+    margin-bottom: 10px;
+  }
+}
+
+.card-head,
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  margin-bottom: 0;
+}
+.card-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.card-action > button {
+  width: fit-content;
+  padding: 6px 10px;
+  padding-top: 0px;
+  border: none;
+  font-size: 1rem;
+}
+
+.card-tail {
+  background: #f1f1f1;
+}
+.card-date {
+  font-size: 0.8rem;
+  margin: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.card-date > span {
+  margin-left: 6px;
+  margin-top: 0;
+}
