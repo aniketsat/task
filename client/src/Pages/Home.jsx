@@ -107,9 +107,45 @@ const Home = () => {
           }
         );
         console.log(res.data);
-        setTasks([res.data.todo, ...tasks]);
+        // Add task to the tasks array according to the state
+        switch (state) {
+          case "ALL":
+            setTasks([...tasks, res.data.todo]);
+            break;
+          case "COMPLETED":
+            if (res.data.todo.completed === true) {
+              setTasks([...tasks, res.data.todo]);
+            }
+            break;
+          case "PENDING":
+            if (res.data.todo.completed === false) {
+              setTasks([...tasks, res.data.todo]);
+            }
+            break;
+          default:
+            setTasks([...tasks, res.data.todo]);
+            break;
+        }
+        setAlert({
+          show: true,
+          type: "success",
+          message: "Task added successfully",
+        });
       } catch (error) {
         console.log(error);
+        if (error.response) {
+          setAlert({
+            show: true,
+            type: "danger",
+            message: error.response.data.message,
+          });
+        } else {
+          setAlert({
+            show: true,
+            type: "danger",
+            message: "Something went wrong",
+          });
+        }
       }
 
       setTitle("");
@@ -208,6 +244,7 @@ const Home = () => {
 
     const toggleTask = async () => {
       try {
+        console.log(tasks.find((task) => task._id === id).completed);
         const res = await axios.put(
           `http://localhost:8081/api/todos/${id}`,
           {
@@ -221,9 +258,9 @@ const Home = () => {
         );
         console.log(res.data);
         setTasks(
-          tasks.filter((task) => {
+          tasks.map((task) => {
             if (task._id === id) {
-              task.completed = !task.completed;
+              return res.data.todo;
             }
             return task;
           })
@@ -276,6 +313,10 @@ const Home = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => setState("ALL")}
+                    style={{
+                      backgroundColor: state === "ALL" ? "#007bff" : "",
+                      color: state === "ALL" ? "white" : "",
+                    }}
                   >
                     All
                   </button>
@@ -283,6 +324,10 @@ const Home = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => setState("COMPLETED")}
+                    style={{
+                      backgroundColor: state === "COMPLETED" ? "#007bff" : "",
+                      color: state === "COMPLETED" ? "white" : "",
+                    }}
                   >
                     Completed
                   </button>
@@ -290,6 +335,10 @@ const Home = () => {
                     type="button"
                     className="btn btn-outline-primary"
                     onClick={() => setState("PENDING")}
+                    style={{
+                      backgroundColor: state === "PENDING" ? "#007bff" : "",
+                      color: state === "PENDING" ? "white" : "",
+                    }}
                   >
                     Pending
                   </button>
@@ -339,6 +388,8 @@ const Home = () => {
               </div>
 
               <div className="col-md-8 ">
+                {/* <button className="btn btn-primary">Sort by due date</button> */}
+
                 <ul
                   style={{
                     listStyle: "none",
@@ -372,6 +423,12 @@ const Home = () => {
                                 <label
                                   className="form-check-label"
                                   htmlFor="flexCheckDefault"
+                                  style={{
+                                    textDecoration: task.completed
+                                      ? "line-through"
+                                      : "none",
+                                    color: task.completed ? "grey" : "black",
+                                  }}
                                 >
                                   {task.title}
                                 </label>

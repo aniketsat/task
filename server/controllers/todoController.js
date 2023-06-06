@@ -125,7 +125,7 @@ const updateTodo = async (req, res) => {
     todo.title = title || todo.title;
     todo.description = description || todo.description;
     todo.due = due || todo.due;
-    todo.completed = completed || todo.completed;
+    todo.completed = completed === undefined ? todo.completed : completed;
     todo.user = userId || todo.user;
 
     const updatedTodo = await todo.save();
